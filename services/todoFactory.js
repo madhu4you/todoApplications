@@ -1,14 +1,14 @@
-todoApp.factory('todoFactory', function($q) {
-    'use strict';
+'use strict';
+angular.module('todoApp').factory('todoFactory', function($q) {
     var STORAGE_ID = 'todos-storage-local';
     var todoData = {
         todos: [],
-        
+
         //get the data from localstorage
         _getFromLocalStorage: function () {
             return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
         },
-        
+
         //save the data to storage
         _saveToLocalStorage: function (todos) {
             localStorage.setItem(STORAGE_ID, JSON.stringify(todos));
@@ -35,7 +35,7 @@ todoApp.factory('todoFactory', function($q) {
             return deferred.promise;
         },
 
-        delete: function (todo) {
+        deleteTodo: function (todo) {
             var deferred = $q.defer();
 
             todoData.todos.splice(todoData.todos.indexOf(todo), 1);
