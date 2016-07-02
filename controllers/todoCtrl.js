@@ -12,7 +12,7 @@ angular.module('todoApp').controller("TodoCtrl", ['$scope', '$filter', '$statePa
         else if (status === 'completer') {
             todos = $filter('filter')(todos, { completed: true });
         }  
-        $scope.gridOptions.data = todos;
+        //$scope.gridOptions.data = todos;
     });
     
     /* Grid options */
@@ -24,7 +24,8 @@ angular.module('todoApp').controller("TodoCtrl", ['$scope', '$filter', '$statePa
         rowTemplate: '<div grid="grid" class="ui-grid-draggable-row" draggable="true"><div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader, \'custom\': true }" ui-grid-cell></div></div>',
         columnDefs: [{ field: 'completed', displayName: '', enableColumnMenu: false, width: 30, cellTemplate: '<div class="ui-grid-cell-contents"><todo-check toggle-check="grid.appScope.toggleCompleted(row.entity)" info="row.entity"><todo-check></div>' },
                      { field: 'title', displayName: 'Todos', enableColumnMenu: false, cellTemplate: '<div class="ui-grid-cell-contents" ><span class="done-{{row.entity.completed}}">{{row.entity.title}}</span></div>' },
-                     { field: 'action', displayName: 'Action', enableColumnMenu: false, width: 80, cellTemplate: '<div class="ui-grid-cell-contents" ><todo-delete todo-change="grid.appScope.removeTodo(row.entity)"><todo-delete></div></div>'} ]
+                     { field: 'action', displayName: 'Action', enableColumnMenu: false, width: 80, cellTemplate: '<div class="ui-grid-cell-contents" ><todo-delete todo-change="grid.appScope.removeTodo(row.entity)"><todo-delete></div></div>'} ],
+        data: todos
       };
     
     /* After drag and drop update the data */
