@@ -6,15 +6,12 @@ angular.module("todoApp", ['ui.grid', 'ui.grid.pagination', 'ui.grid.draggable-r
       
       $stateProvider
         .state('all', {
-            url: "/",
-            templateUrl: "todo-grid.html",
+            url: "/"
         })
         .state('active', {
-            url: "/active",
-            templateUrl: "todo-grid.html",
+            url: "/active"
         })
         .state('completed', {
-            url: "/completed",
-            templateUrl: "todo-grid.html",
+            url: "/completed"
         })
     })

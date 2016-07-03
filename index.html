@@ -13,8 +13,23 @@
       <div class="container" ng-controller="TodoCtrl">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="todolist not-done" ui-view="">
-                 
+                <div class="todolist not-done">
+                    <h1>Todos</h1>
+                    <form role="form" name="todoForm"  ng-submit="addTodo()">
+                        <div class="row">
+                            <div class="col-md-11 col-sm-11 col-xs-9">
+                                <input type="text" name="todoText" class="form-control add-todo" ng-model="newTodo" placeholder="Add todo" required>
+                            </div>
+                            <div class="col-md-1 col-sm-1">
+                                <button type="submit" ng-disabled="todoForm.todoText.$invalid" class="btn btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div ui-grid="gridOptions" ui-grid-pagination ui-grid-draggable-rows ui-grid-edit class="myGrid"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
