@@ -40,7 +40,10 @@ angular.module('todoApp').controller("TodoCtrl", ['$scope', '$filter', '$statePa
 			if (title === oldValue) {
 				return;
 			}
-			todoFactory[title ? 'put' : 'delete'](rowEntity);
+			todoFactory[title ? 'put' : 'delete'](rowEntity)
+            .then(function success() {}, function error() {
+                todo.title = $scope.originalTodo.title;
+            });
         });
     };
     /* Grid options end*/
@@ -67,15 +70,12 @@ angular.module('todoApp').controller("TodoCtrl", ['$scope', '$filter', '$statePa
             return;
         }
 
-        todoFactory.insert(newTodo);
-        $scope.newTodo = '';
+        todoFactory.insert(newTodo)
+            .then(function success() {
+					$scope.newTodo = '';
+            });
     };
-    /* Edit Todo */
-    $scope.editTodo = function (todo) {
-        $scope.editedTodo = todo;
-        //need to write the code
-    };
-
+    
     /* Remove Todo */
     $scope.removeTodo = function (todo) {
         todoFactory.deleteTodo(todo);

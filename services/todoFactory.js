@@ -1,5 +1,5 @@
 'use strict';
-angular.module('todoApp').factory('todoFactory', function($q) {
+angular.module('todoApp').factory('todoFactory', ['$q','$http', function($q, $http) {
     var STORAGE_ID = 'todos-storage-local';
     var todoData = {
         todos: [],
@@ -57,10 +57,17 @@ angular.module('todoApp').factory('todoFactory', function($q) {
 
         insert: function (todo) {
             var deferred = $q.defer();
-
             todoData.todos.push(todo);
+            
+            $http.post('/api/todos', todo)
+            .then(function () {
+                //success
 
-            todoData._saveToLocalStorage(todoData.todos);
+            }, function () {
+                todoData._saveToLocalStorage(todoData.todos);
+            });
+
+            
             deferred.resolve(todoData.todos);
 
             return deferred.promise;
@@ -79,4 +86,4 @@ angular.module('todoApp').factory('todoFactory', function($q) {
     };
 
     return todoData;
-});
+}]);
