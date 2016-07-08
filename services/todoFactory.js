@@ -47,12 +47,20 @@ angular.module('todoApp').factory('todoFactory', ['$q','$http', function($q, $ht
         },
 
         get: function () {
-            var deferred = $q.defer();
-
+        	var deferred = $q.defer();
+        	$http.get('todos.json')
+			.success(function (resp) {
+				angular.copy(resp, todoData.todos);
+				deferred.resolve(todoData.todos);
+			})
+			.error (function(err, status) {
+				deferred.reject(err);
+			});
+        	return deferred.promise;
+            /*
             angular.copy(todoData._getFromLocalStorage(), todoData.todos);
             deferred.resolve(todoData.todos);
-
-            return deferred.promise;
+            */
         },
 
         insert: function (todo) {

@@ -1,8 +1,7 @@
 angular.module('todoApp').controller("TodoCtrl", ['$scope', '$filter', '$stateParams', 'todoFactory', function ($scope, $filter, $stateParams, todoFactory) {
         
-    //get the stored todos
-    todoFactory.get();
-    var todos = $scope.todos = todoFactory.todos;
+    var todos = $scope.todos = [];
+
     //URL route
     $scope.$on('$stateChangeStart', function (event, toState) {
         var status = $scope.status = toState.name || '';
@@ -57,7 +56,20 @@ angular.module('todoApp').controller("TodoCtrl", ['$scope', '$filter', '$statePa
     /* Watchers end */
     
     $scope.newTodo = '';
-    $scope.editedTodo = null;
+    
+    /* Get all the todos*/
+    $scope.getAllTodos = function() {
+    	//get the stored todos
+        todoFactory.get()
+        .then(function(res){
+        	todos = $scope.todos = res;
+        	$scope.gridOptions.data = todos; 
+        }, function(err){
+        	// error msg
+        	console.log(err);
+        });
+    }
+    $scope.getAllTodos();
     
     /* Add Todo */
     $scope.addTodo = function () {
