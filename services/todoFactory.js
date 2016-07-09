@@ -1,97 +1,80 @@
 'use strict';
 angular.module('todoApp').factory('todoFactory', ['$q','$http', function($q, $http) {
-    var STORAGE_ID = 'todos-storage-local';
-    var todoData = {
-        todos: [],
 
-        //get the data from localstorage
-        _getFromLocalStorage: function () {
-            return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
-        },
+	var todoData = {
+		todos: [],
 
-        //save the data to storage
-        _saveToLocalStorage: function (todos) {
-            localStorage.setItem(STORAGE_ID, JSON.stringify(todos));
-        },
+		clearCompleted: function () {
+			var oldTodos = todoData.todos;
 
-        clearCompleted: function () {
-            var deferred = $q.defer();
-
-            var completeTodos = [];
-            var incompleteTodos = [];
-            todoData.todos.forEach(function (todo) {
-                if (todo.completed) {
-                    completeTodos.push(todo);
-                } else {
-                    incompleteTodos.push(todo);
-                }
-            });
-
-            angular.copy(incompleteTodos, todoData.todos);
-
-            todoData._saveToLocalStorage(todoData.todos);
-            deferred.resolve(todoData.todos);
-
-            return deferred.promise;
-        },
-
-        deleteTodo: function (todo) {
-            var deferred = $q.defer();
-
-            todoData.todos.splice(todoData.todos.indexOf(todo), 1);
-
-            todoData._saveToLocalStorage(todoData.todos);
-            deferred.resolve(todoData.todos);
-
-            return deferred.promise;
-        },
-
-        get: function () {
-        	var deferred = $q.defer();
-        	$http.get('todos.json')
-			.success(function (resp) {
-				angular.copy(resp, todoData.todos);
-				deferred.resolve(todoData.todos);
-			})
-			.error (function(err, status) {
-				deferred.reject(err);
+			var completeTodos = [];
+			var incompleteTodos = [];
+			todoData.todos.forEach(function (todo) {
+				if (todo.completed) {
+					completeTodos.push(todo);
+				} else {
+					incompleteTodos.push(todo);
+				}
 			});
-        	return deferred.promise;
-            /*
-            angular.copy(todoData._getFromLocalStorage(), todoData.todos);
-            deferred.resolve(todoData.todos);
-            */
-        },
 
-        insert: function (todo) {
-            var deferred = $q.defer();
-            todoData.todos.push(todo);
-            
-            $http.post('/api/todos', todo)
-            .then(function () {
-                //success
+			todoData.todos = incompleteTodos;
 
-            }, function () {
-                todoData._saveToLocalStorage(todoData.todos);
-            });
+			return $http.delete('/todos')
+				.then(function success() {
+					return todoData.todos;
+				}, function error() {
+					todoData.todos = oldTodos;
+					return oldTodos;
+				});
+		},
 
-            
-            deferred.resolve(todoData.todos);
+		delete: function (todo) {
+			var oldTodos = todoData.todos;
 
-            return deferred.promise;
-        },
+			todoData.todos.splice(todoData.todos.indexOf(todo), 1);
 
-        put: function (todo, index) {
-            var deferred = $q.defer();
+			return $http.delete('/todos/' + todo.id)
+				.then(function success() {
+					return todoData.todos;
+				}, function error() {
+					todoData.todos = oldTodos;
+					return oldTodos;
+				});
+		},
 
-            todoData.todos[index] = todo;
+		get: function () {
+			return $http.get('todos.json')
+				.then(function (resp) {
+					todoData.todos = resp.data;
+					return todoData.todos;
+				});
+		},
 
-            todoData._saveToLocalStorage(todoData.todos);
-            deferred.resolve(todoData.todos);
+		insert: function (todo) {
+			var oldTodos = todoData.todos;
 
-            return deferred.promise;
-        }
-    };
+			return $http.post('/todos', todo)
+				.then(function success(resp) {
+					todo.id = resp.data.id;
+					todoData.todos.push(todo);
+					return todoData.todos;
+				}, function error() {
+					todoData.todos = oldTodos;
+					return oldTodos;
+				});
+		},
 
-    return todoData;
+		put: function (todo) {
+			var oldTodos = todoData.todos;
+
+			return $http.put('/todos/' + todo.id, todo)
+				.then(function success() {
+					return todoData.todos;
+				}, function error() {
+					todoData.todos = oldTodos;
+					return oldTodos;
+				});
+		}
+	};
+	return todoData;
 }]);

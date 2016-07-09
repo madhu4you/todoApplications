@@ -83,9 +83,11 @@ angular.module('todoApp').controller("TodoCtrl", ['$scope', '$filter', '$statePa
         }
 
         todoFactory.insert(newTodo)
-            .then(function success() {
-					$scope.newTodo = '';
-            });
+        .then(function success() {
+				$scope.newTodo = '';
+        }, function(err) {
+        	
+        });
     };
     
     /* Remove Todo */
