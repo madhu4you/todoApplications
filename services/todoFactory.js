@@ -19,8 +19,9 @@ angular.module('todoApp').factory('todoFactory', ['$q','$http', function($q, $ht
 
 			todoData.todos = incompleteTodos;
 
-			return $http.delete('/todos')
-				.then(function success() {
+			return $http.post('todos', todoData)
+				.then(function success(resp) {
+					todo.id = resp.data.id;
 					return todoData.todos;
 				}, function error() {
 					todoData.todos = oldTodos;
@@ -28,12 +29,10 @@ angular.module('todoApp').factory('todoFactory', ['$q','$http', function($q, $ht
 				});
 		},
 
-		delete: function (todo) {
+		deleteTodo: function (todo) {
 			var oldTodos = todoData.todos;
 
-			todoData.todos.splice(todoData.todos.indexOf(todo), 1);
-
-			return $http.delete('/todos/' + todo.id)
+			return $http.delete('todos/' + todo.id)
 				.then(function success() {
 					return todoData.todos;
 				}, function error() {
@@ -43,7 +42,7 @@ angular.module('todoApp').factory('todoFactory', ['$q','$http', function($q, $ht
 		},
 
 		get: function () {
-			return $http.get('todos.json')
+			return $http.get('todos')
 				.then(function (resp) {
 					todoData.todos = resp.data;
 					return todoData.todos;
@@ -52,11 +51,10 @@ angular.module('todoApp').factory('todoFactory', ['$q','$http', function($q, $ht
 
 		insert: function (todo) {
 			var oldTodos = todoData.todos;
-
-			return $http.post('/todos', todo)
+			todoData.todos.push(todo);
+			return $http.post('todos', todoData)
 				.then(function success(resp) {
 					todo.id = resp.data.id;
-					todoData.todos.push(todo);
 					return todoData.todos;
 				}, function error() {
 					todoData.todos = oldTodos;
@@ -66,8 +64,7 @@ angular.module('todoApp').factory('todoFactory', ['$q','$http', function($q, $ht
 
 		put: function (todo) {
 			var oldTodos = todoData.todos;
-
-			return $http.put('/todos/' + todo.id, todo)
+			return $http.put('todos/' + todo.id, todo)
 				.then(function success() {
 					return todoData.todos;
 				}, function error() {
