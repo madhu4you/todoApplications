@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <title>TODO List</title>
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+      <!-- Optional theme -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+      <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css">
+      <link rel="stylesheet" href="style.css">
+  </head>
+  <body ng-app="todoAppE2E">
+      <div class="container" ng-controller="TodoCtrl">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="todolist not-done">
+                    <h1>Todos</h1>
+                    <form role="form" name="todoForm"  ng-submit="addTodo()">
+                        <div class="row">
+                            <div class="col-md-11 col-sm-11 col-xs-9">
+                                <input type="text" name="todoText" class="form-control add-todo" ng-model="newTodo" placeholder="Add todo" required>
+                            </div>
+                            <div class="col-md-1 col-sm-1">
+                                <button type="submit" ng-disabled="todoForm.todoText.$invalid" class="btn btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div ui-grid="gridOptions" ui-grid-pagination ui-grid-draggable-rows ui-grid-edit class="myGrid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       <div class="todo-footer">
+           <div class="row">
+               <div class="col-md-8">
+                   <ul id="filters">
+						<li>
+                            <a class="" ng-class="{selected: status == 'all'} " ui-sref="all" >All (<span ng-bind="getTotalTodos"></span>)</a>
+						</li>
+						<li>
+							<a ng-class="{selected: status == 'active'}" ui-sref="active" >Active (<span ng-bind="remainingCount"></span>)</a>
+						</li>
+						<li>
+							<a ng-class="{selected: status == 'completed'}" ui-sref="completed" >Completed (<span ng-bind="completedCount"></span>)</a>
+						</li>
+					</ul>
+               </div>
+               <div class="col-md-3 pull-right">
+                   <a href class="pull-right" id="clear-completed" ng-click="clearCompletedTodos()" ng-show="completedCount">Clear completed</a>
+               </div>
+           </div>
+       </div>
+    </div>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-mocks.js"></script>
+    <script src="http://ui-grid.info/release/ui-grid.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+    <script src="todoApp.js"></script>
+    <script src="e2e.js"></script>
+    <script src="controllers/todoCtrl.js"></script>
+    <script src="services/todoFactory.js"></script>
+    <script src="directives/todoCheck.js"></script>
+    <script src="directives/todoDelete.js"></script>
+    <script src="directives/draggable-rows.js"></script>
+  </body>
+</html>

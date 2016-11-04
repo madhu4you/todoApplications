@@ -1,0 +1,170 @@
+.wrapper {
+  width: 800px;
+  min-height: 638px;
+  border-color: #e2e2e2;
+  border-style: solid;
+  border-width: 10px;
+  padding: 0;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+header { 
+  padding: 0;
+  margin: 0;
+  height: 139px;
+}
+#main {
+    display: none;
+}
+.title {
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-weight: bold;
+  margin: 0px;
+  padding: 42px 0px 0px 31px;
+}
+.version {
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  color: #616161;
+  margin-top: 0;
+  padding: 0px 0px 0px 31px;
+  
+}
+section {
+  background-color: #ffffff;
+  width: 392px;
+  min-height: 450px;
+  float: left;
+  border-width: 4px;
+  border-color: #f0f0f0;
+  border-style: solid;
+}
+
+.instruction {
+  font-family: Georgia, Times, Times New Roman, Serif;
+  font-weight: bold;
+  font-size: 18px;
+  margin-left: 31px;
+}
+div#task {
+  margin-left: 31px;
+  margin-top: 30px;
+  font-family: Arial, Helvetica Neue, Helvetica, Sans-Serif;
+  font-size: 14px;
+}
+
+.form-enter {
+  width: 320px;
+  height: 40px;
+  border-radius: 5px;
+  border-color: #dedede;
+  border-style: solid;
+  border-width: 1px;
+  background: #f0f0f0;
+  margin-bottom: 30px;
+  margin-top: 8px;
+}
+.submit {
+  width: 93px;
+  height: 46px;
+  background-color: #434343;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: #434343;
+  border-style: solid;
+  color: #ffffff;
+  font-family: Georgia, Times, Times New Roman, Serif;
+  font-size: 18px;
+}
+.existing {
+  font-family: Georgia, Times, Times New Roman, Serif;
+  font-weight: bold;
+  font-size: 18px;
+  margin-left: 31px;
+}
+.task-wrapper {
+  width: 345px;
+  height: auto;
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 5px;
+  border-color: #f0f0f0;
+  margin: 18px 18px 0px 18px;
+  padding: 5px;
+}
+#todo-list {
+    width: 100%;
+    border-spacing: 0;
+}
+.task-item {
+  height: 40px;
+  padding: 6px 5px;
+}
+.task-item:nth-of-type(even) {
+  background-color: #f0f0f0;
+}
+.task-name {
+  font-family: Georgia, Times, Times New Roman, Serif;
+  font-size: 14px;
+  padding-left: 10px;
+  font-weight: bold;
+}
+.task-date {
+  font-family: Arial, Helvetica Neue, Helvetica, Sans-Serif;
+  color: #c5c5c5;
+  font-size: 12px;
+  margin: 18.960px 0px;
+  padding-left: 5px;
+}
+.task-assigned {
+  font-family: Arial, Helvetica Neue, Helvetica, Sans-Serif;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 810px) {
+    .wrapper{
+        width: 98%;
+    }
+    section{
+        width: 48.5%;
+    }
+    .form-enter{
+      width: 90%;
+    }
+    .task-wrapper {
+      width: 85%;
+    }
+}
+@media only screen and (max-width: 620px) {
+     .wrapper{
+        width: 96%;
+    }
+    section{
+        width: 48%;
+    }
+    .form-enter{
+      width:85%;
+    }
+    .task-wrapper {
+      width: 78%;
+    }
+}
+@media only screen and (max-width: 380px) {
+     .wrapper{
+        width: 96%;
+    }
+    section{
+        width: 47%;
+    }
+    .form-enter{
+      width: 85%;
+    }
+    .task-wrapper {
+      width: 75%;
+    }
+    .submit {
+      width: 80px;
+      height: 30px;
+    }
+}
